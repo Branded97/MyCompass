@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
-    private ImageView iv_compass, iv_needle;
+    private ImageView iv_needle;
     private TextView tv_degrees;
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -33,19 +33,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        iv_compass = findViewById(R.id.imageCompass);
         iv_needle = findViewById(R.id.imageNeedle);
         tv_degrees = findViewById(R.id.textView);
-
-
+        
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         if (sensorManager != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         }
-
-
-
     }
 
     @Override
