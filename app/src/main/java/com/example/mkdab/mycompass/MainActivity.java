@@ -11,6 +11,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
     private ImageView iv_needle;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         iv_needle = findViewById(R.id.imageNeedle);
         tv_degrees = findViewById(R.id.textView);
-        
+
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         if (sensorManager != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -72,22 +74,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             float azimuthInRadians = mOrientation[0];
             float azimuthInDegress = (float)(Math.toDegrees(azimuthInRadians)+360)%360;
 
-
-
-            tv_degrees.setText(String.format("%1$.3f", 360-azimuthInDegress) + (char) 0x00B0 );
+            tv_degrees.setText(String.format(Locale.getDefault(),"%1$.3f %2$s",
+                                        360-azimuthInDegress, "\u00b0"));
 
             RotateAnimation ra = new RotateAnimation(mCurrentDegree, -azimuthInDegress,
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
             ra.setDuration(250);
-
             ra.setFillAfter(true);
 
             iv_needle.startAnimation(ra);
             mCurrentDegree = -azimuthInDegress;
         }
-
     }
 
     @Override
